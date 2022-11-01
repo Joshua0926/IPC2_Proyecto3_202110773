@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}"/> {% endcomment %}
+{% endblock %}
+{% block title %}Consultas{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1>Dashboard de Creacion</h1>
+  </div>
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:18px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Recurso</strong></h5>
+              <p class="card-text">cree un nuevo recurso en el sistema</p>
+              <a href="/crear_recurso" class="btn btn-primary">Crear</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:18px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Configuracion</strong></h5>
+              <p class="card-text">cree una nueva configuracion en el sistema</p>
+              <a href="/crear_config" class="btn btn-primary">Crear</a>
+            </div>
+          </div>
+    </div>  
+    
+  </div>
+
+  <div class="row justify-content-center" style="margin-top:15px">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:18px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Clientes</strong></h5>
+              <p class="card-text">cree un nuevo cliente en el sistema</p>
+              <a href="/crear_cliente" class="btn btn-primary">Crear</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:18px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Categoria</strong></h5>
+              <p class="card-text">cree una nueva categoria en el sistema</p>
+              <a href="/crear_categ" style="align-items:center;"  class="btn btn-primary">Crear</a>
+            </div>
+          </div>
+    </div>
+      
+    
+  </div>
+
+  <div class="row justify-content-center" style="margin-top:15px;margin-bottom:25px">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:18px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Instancia</strong></h5>
+              <p class="card-text">cree una nueva Instancia en el sistema</p>
+              <a href="/crear_instance" style="align-items:center;"  class="btn btn-primary">Crear</a>
+            </div>
+          </div>
+    </div>
+      
+    
+  </div>
+  
+
+{% endblock %}

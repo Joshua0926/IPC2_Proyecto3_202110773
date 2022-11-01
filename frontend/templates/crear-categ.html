@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view-catg.css' %}"/>
+{% endblock %}
+{% block title %}crear categoria{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1> Crear Categoria</h1>
+</div>
+<div id="category" class="rounded" style="padding:50px;">
+  <form class=" row g-2" method="post">
+    {% csrf_token %}
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre: </label>
+        <input type="text" class="form-control" name="nombre" id="nombre"  value="{{ nombre }}">
+      </div>
+      <div class="col-md-2">
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" name="id" id="id" value="{{ id }}">
+      </div>
+      <div class="col-md-12">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{ descripcion }}">
+      </div>
+      <div class="col-md-12">
+        <label for="carga" class="form-label">Carga</label>
+        <input type="text" class="form-control" name="carga" id="descripcion" value="{{ carga }}">
+      </div>
+
+      {% if configuraciones%}
+      <div style="margin-top:20px;" class="form-group col-md-6">
+        <label for="configuraciones">Configuraciones Disponibles</label>
+        {% for conf in configuraciones%}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox"  name="{{conf.id}}" value="{{conf.id}}" id="{{conf.id}}">
+            <label class="form-check-label" for="{{conf.nombre}}">
+                {{conf.nombre}}
+            </label>
+          </div>
+        {% endfor%}
+      </div>
+      
+      {% endif %}
+
+      <div class="col-md-6" style="margin-top:15px">
+        <a onclick="document.forms[0].submit();return false;" class="btn btn-primary">Crear Categoria</a>
+      </div>
+
+
+
+  </form>
+
+</div>
+{% if message != '' %}
+<script>
+  alert('{{ message }}');
+</script>
+{% endif %}
+
+{% endblock %}

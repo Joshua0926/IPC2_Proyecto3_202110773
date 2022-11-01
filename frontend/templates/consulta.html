@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}"/> {% endcomment %}
+{% endblock %}
+{% block title %}Consultas{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1> Dashboard de Consultas</h1>
+  </div>
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:10px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Categorias</strong></h5>
+              <p class="card-text">Visualice la informacion de cada categoria detalladamente</p>
+              <a href="/view-catg" class="btn btn-primary">Ir a Consulta</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:10px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Clientes</strong></h5>
+              <p class="card-text">Visualice la informacion de cada Cliente detalladamente</p>
+              <a href="/view-clientes" class="btn btn-primary">Ir a consulta</a>
+            </div>
+          </div>
+    </div>  
+    
+  </div>
+
+  <div class="row justify-content-center" style="margin-top:15px">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:10px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Recursos</strong></h5>
+              <p class="card-text">Visualice la informacion de cada Recurso detalladamente</p>
+              <a href="/view-recursos" class="btn btn-primary">Ir a Consulta</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:10px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>configuraciones</strong></h5>
+              <p class="card-text">visualice la informacion de cada configuracion detallamdamente.</p>
+              <a href="/view-config" class="btn btn-primary">Ir a Consulta</a>
+            </div>
+          </div> 
+    </div>
+
+  </div>
+  <div class="row justify-content-center" style="margin-top:15px;margin-bottom:20px">
+    <div class="col-sm-6">
+        <div class="card" style="width: 25rem;padding:10px;border-radius:5px;background-color:#eee;margin: auto;">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Instancias</strong></h5>
+              <p class="card-text">Visualice la informacion de cada Instancia detalladamente</p>
+              <a href="/view-instances" class="btn btn-primary">Ir a Consulta</a>
+            </div>
+        </div>
+    </div>
+   </div>
+
+{% endblock %}

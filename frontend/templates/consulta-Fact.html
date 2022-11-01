@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view-catg.css' %}"/>
+{% endblock %}
+{% block title %}consultar Factura{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1>consultar Factura</h1>
+</div>
+<div id="category" class="rounded" style="padding:50px;">
+  <form class="row g-2" action="buscar" method="GET">
+    <div class="col-md-4">
+        <label for="id_cliente" class="form-label">Clientes</label>
+        {% if clientes%}
+        <select name="id_cliente" class="form-control" id="id_cliente">
+        <option disabled selected value> --seleccione un cliente -- </option>
+        {% for clt in clientes%}
+        <option value={{clt.nit}}>{{clt.nombre}}</option>
+        {% endfor %}
+         </select>
+        {% endif %}
+      </div>
+    <div class="col-md-8" style="margin-top:25px">
+      <button type="submit" class="btn btn-primary">consultar</button>
+    </div>
+  </form>
+
+</div>
+{% if message != '' %}
+<script>
+  alert('{{ message }}');
+</script>
+{% endif %}
+
+
+{% endblock %}

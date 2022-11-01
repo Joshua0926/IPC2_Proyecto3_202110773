@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view-catg.css' %}"/>
+{% endblock %}
+{% block title %}crear cliente{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1> Crear Cliente</h1>
+</div>
+<div id="category" class="rounded" style="padding:50px;">
+  <form class=" row g-2" method="post">
+    {% csrf_token %}
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre: </label>
+        <input type="text" class="form-control" name="nombre" id="nombre"  value="{{ nombre }}">
+      </div>
+      <div class="col-md-2">
+        <label for="nit" class="form-label">NIT</label>
+        <input type="text" class="form-control" name="nit" id="nit" value="{{ nit }}">
+      </div>
+      <div class="col-md-6">
+        <label for="user" class="form-label">Usuario</label>
+        <input type="text" class="form-control" name="user" id="user" value="{{ user }}">
+      </div>
+      <div class="col-md-6">
+        <label for="password" class="form-label">contraseña</label>
+        <input type="password" class="form-control" name="password" id="password" value="{{ password }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="direccion" class="form-label">Direccion</label>
+        <input type="text" class="form-control" name="direccion" id="direccion" value="{{ direccion }}">
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label">correo Electronico</label>
+        <input type="text" class="form-control" name="email" id="email" value="{{ email }}">
+      </div>
+
+      {% if instancias%}
+      <div style="margin-top:20px;" class="form-group col-md-6">
+        <label for="instancias">Instancias Disponibles</label>
+        {% for inst in instancias%}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox"  name="{{inst.id}}" value="{{inst.id}}" id="{{inst.id}}">
+            <label class="form-check-label" for="{{inst.nombre}}">
+                {{inst.nombre}}
+            </label>
+          </div>
+        {% endfor%}
+      </div>
+      
+      {% endif %}
+
+      <div class="col-md-6" style="margin-top:15px">
+        <a onclick="document.forms[0].submit();return false;" class="btn btn-primary">Crear Cliente</a>
+      </div>
+  </form>
+
+</div>
+{% if message != '' %}
+<script>
+  alert('{{ message }}');
+</script>
+{% endif %}
+
+{% endblock %}

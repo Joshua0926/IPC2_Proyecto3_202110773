@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %} {% block title %}Recursos{% endblock %} {% block content %}
+<div class="jumbotron">
+  <h1>Vista Recursos</h1>
+</div>
+{% for rec in recursos %}
+<div id="category" class="rounded">
+  <div id="category_firstFields" class="container">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">abreviatura</th>
+            <th scope="col">metrica</th>
+            <th scope="col">tipo</th>
+            <th scope="col">costo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">{{rec.id}}</td>
+            <td>{{rec.nombre}}</td>
+            <td>{{rec.abreviatura}}</td>
+            <td>{{rec.metrica}}</td>
+            <td>{{rec.tipo}}</td>
+            <td>{{rec.costo}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+{% endfor %} {% endblock %}

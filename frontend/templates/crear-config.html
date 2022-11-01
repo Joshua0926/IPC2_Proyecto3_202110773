@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view-catg.css' %}"/>
+{% endblock %}
+{% block title %}crear configuracion{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1> Crear Configuracion</h1>
+</div>
+<div id="category" class="rounded" style="padding:50px;">
+  <form class=" row g-2" method="post">
+    {% csrf_token %}
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre: </label>
+        <input type="text" class="form-control" name="nombre" id="nombre"  value="{{ nombre }}">
+      </div>
+      <div class="col-md-2">
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" name="id" id="id" value="{{ id }}">
+      </div>
+      <div class="col-md-12">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{ descripcion }}">
+      </div>
+
+      {% if recursos%}
+      <div style="margin-top:20px;" class="form-group col-md-6">
+        <label for="recursos">Recursos</label>
+        {% for rec in recursos%}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox"  name="recursos" value="{{rec.id}}" id="{{rec.id}}">
+            <label class="form-check-label" for="{{rec.nombre}}">
+                {{rec.nombre}}
+            </label>
+          </div>
+        {% endfor%}
+      </div>
+      <div class="col-md-6">
+        <label for="cantidad" class="form-label">Cantidad: </label>
+        <input type="text" class="form-control" name="cantidad" id="cantidad"  value="{{ cantidad }}">
+      </div>
+     
+      
+      {% endif %}
+
+      <div class="col-md-6" style="margin-top:15px">
+        <a onclick="document.forms[0].submit();return false;" class="btn btn-primary">Crear configuracion</a>
+      </div>
+
+
+
+  </form>
+
+</div>
+{% if message != '' %}
+<script>
+  alert('{{ message }}');
+</script>
+{% endif %}
+
+{% endblock %}

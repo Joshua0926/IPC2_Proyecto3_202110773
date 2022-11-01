@@ -1,0 +1,80 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %} {% block title %}Categorias{% endblock %} {% block content %}
+<div class="jumbotron">
+  <h1>Vista Categorias</h1>
+</div>
+{% for catg in categorias %}
+<div id="category" class="rounded">
+  <h2>Categoria</h2>
+  <div id="category_firstFields" class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <strong> Id </strong>
+      </div>
+      <div class="col-sm-3">
+        <strong> Nombre</strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>descripcion</strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>Carga</strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">{{ catg.id }}</div>
+      <div class="col-sm-3">{{ catg.nombre }}</div>
+      <div class="col-sm-3">{{ catg.descripcion }}</div>
+      <div class="col-sm-3">{{ catg.carga }}</div>
+    </div>
+  </div>
+  <hr style="height: 10px" />
+  {% for config in catg.lista_conf %}
+  <div id="config_div" class="rounded">
+    <h3>Configuracion</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">{{config.id}}</td>
+          <td>{{config.nombre}}</td>
+          <td>{{config.descripcion}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <h3>Recursos</h3>
+      <table class="table table-bordered">
+        <thead  class="thead-dark">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for rec in config.recursos %}
+          <tr>
+            <td scope="row">{{rec.id_recurso}}</td>
+            <td scope="row">{{rec.cantidad}}</td>
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% endfor %} {% endblock %}

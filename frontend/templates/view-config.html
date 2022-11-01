@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %} {% block title %}Categorias{% endblock %} {% block content %}
+<div class="jumbotron">
+  <h1>Vista configuraciones</h1>
+</div>
+{% for confg in configuraciones %}
+<div id="category" class="rounded">
+  <h2>Configuracion</h2>
+  <div id="category_firstFields" class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <strong> Id </strong>
+      </div>
+      <div class="col-sm-3">
+        <strong> Nombre</strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>descripcion</strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">{{ confg.id }}</div>
+      <div class="col-sm-3">{{ confg.nombre }}</div>
+      <div class="col-sm-3">{{ confg.descripcion }}</div>
+    </div>
+  </div>
+  <hr style="height: 10px" />
+  <div id="config_div" class="rounded">
+    <h3>Recursos</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in confg.recursos %}
+        <tr>
+          <td scope="row">{{rec.id_recurso}}</td>
+          <td>{{rec.cantidad}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endfor %} {% endblock %}

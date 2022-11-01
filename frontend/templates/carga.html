@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}"/> {% endcomment %}
+{% endblock %}
+{% block title %}Carga{% endblock %}
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Carga de archivos</h1>
+
+  </div>
+  <p class="lead" style="text-align:center;">Archivo de configuracion</p>
+  <form method="post">
+    {% csrf_token  %}
+    <div class="form-group">
+      <label for="config_file">ingrese su archivo de configuracion</label>
+      <textarea class="form-control form-control-lg" name="config_file" id="config_file" rows="16"></textarea>
+      <button class="btn btn-primary" style="margin-top:10px;margin-bottom:10px" type="submit">cargar Archivo</button>
+    </div>
+  </form>
+
+  
+    <p class="lead" style="text-align:center;">Carga de archivo de Consumo</p>
+    <form method="post">
+      {% csrf_token  %}
+      <div class="form-group">
+        <label for="consumo_file">ingrese su archivo de consumo</label>
+        <textarea class="form-control form-control-lg" name="consumo_file" id="consumo_file" rows="16"></textarea>
+        <button class="btn btn-primary" style="margin-top:10px;margin-bottom:10px" type="submit">cargar Archivo</button>
+      </div>
+    </form>
+    {% if message != '' %}
+    <script>
+      alert('{{ message }}');
+    </script>
+    {% endif %}
+  
+  
+{% endblock %}

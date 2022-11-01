@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %} {% block title %}Clientes{% endblock %} {% block content %}
+<div class="jumbotron">
+  <h1>Vista Clientes</h1>
+</div>
+{% for clt in clientes %}
+<div id="category" class="rounded">
+  <h2>Cliente</h2>
+  <div id="category_firstFields" class="container">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">NIT</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">usuario</th>
+            <th scope="col">clave</th>
+            <th scope="col">direccion</th>
+            <th scope="col">email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">{{clt.nit}}</td>
+            <td>{{clt.nombre}}</td>
+            <td>{{clt.user}}</td>
+            <td>{{clt.password}}</td>
+            <td>{{clt.direccion}}</td>
+            <td>{{clt.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <hr style="height: 10px" />
+  <div id="config_div" class="rounded">
+    <h3>Instancias</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">id Config</th>
+          <th scope="col">nombre</th>
+          <th scope="col">Inicio</th>
+          <th scope="col">Final</th>
+          <th scope="col">estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for instance in clt.lista_inst %}
+        <tr>
+          <td scope="row">{{instance.id}}</td>
+          <td>{{instance.id_config}}</td>
+          <td>{{instance.nombre}}</td>
+          <td>{{instance.fecha_inicio}}</td>
+          <td>{{instance.fecha_final}}</td>
+          <td>{{instance.estado_instancia}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endfor %} {% endblock %}
