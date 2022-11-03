@@ -19,15 +19,15 @@ CORS(app)
 api = Api(app)
 load_dotenv()
 
-Categorias = [] #lista
-Clientes = [] #lista
-Recursos = [] #lista
-Consumos =[] #lista
+Categorias = [] 
+Clientes = []
+Recursos = [] 
+Consumos =[] 
 
 Configuraciones_glob = []
 Instancias_glob=[]
 
-#subir archivo Configuraciones en XML  -----
+#Configuraciones  -----
 @app.route('/post-config', methods=['POST'])
 def PostListaConfig():
     global Recursos
@@ -166,7 +166,7 @@ def PostListaConfig():
         return jsonify({'data': 'error'})
 
 
-#subir archivo de Consumos XML 
+#Consumos 
 @app.route('/post-consumos', methods=['POST'])
 def postConsumos():
     global Consumos
@@ -334,6 +334,27 @@ def get_configs():
     return (respuesta)
 
 
+#obtener Instancias
+@app.route('/get-instancias', methods=['GET'])
+def get_inst():
+    global Instancias_glob
+    
+    list_instancias = []
+    
+    for inst in Instancias_glob: 
+        Dato_inst ={
+        'id':inst.id_instance,
+        'id_config':inst.id_configuracion,
+        'nombre':inst.nombre_instance,
+        'fecha_inicio':inst.fecha_inicio,
+        'fecha_final':inst.fecha_final,
+        'estado_instancia':inst.estado_instancia          
+        }
+        list_instancias.append(Dato_inst)           
+    respuesta = jsonify(list_instancias)
+    return (respuesta)
+
+
 #Crear Configuracion django
 @app.route('/crear-configuracion', methods=['POST'])
 def createConfiguracion():
@@ -455,6 +476,187 @@ def createCateg():
     respuesta = jsonify(Dato)
     return (respuesta)
 
+
+#Crear Clientes
+@app.route('/crear-clientes', methods=['POST'])
+def createClientes():
+    global Clientes
+    global Instancias_glob
+    
+    clientes = request.json['data']
+    
+    nit = clientes['nit']
+    nombre = clientes['nombre']
+    user = clientes['user']
+    password = clientes['password']
+    direccion = clientes['direccion']
+    email = clientes['email']
+    instancias = clientes['instancias']
+    
+    lista_inst = []
+    
+    for inst in instancias:
+        for inst_g in Instancias_glob:
+            if inst['id'] == inst_g.id_instance:
+                lista_inst.append(inst_g)
+                break
+    
+    nuevoCliente = Cliente(nit,nombre,user, password,direccion,email,lista_inst)
+    Clientes.append(nuevoCliente)
+    Dato = {
+            'message': 'Cliente agregado Exitosamente',
+            'state':200
+            }
+    respuesta = jsonify(Dato)
+    return (respuesta)
+
+
+#Crear Instancia
+@app.route('/crear-instancia', methods=['POST'])
+def createInstancias():
+    global Instancias_glob
+    
+    instancias = request.json['data']
+    
+    id = instancias['id']
+    configuracion = instancias['id_configuracion']
+    nombre = instancias['nombre']
+    fecha_inicio = instancias['fecha_inicio']
+    fecha_final = '--'
+    estado = 'Vigente'
+    
+    nuevaInstancia = Instancia(id,configuracion,nombre,fecha_inicio,fecha_final,estado)
+    Instancias_glob.append(nuevaInstancia)
+    
+    Dato = {
+                'message': 'Instancia agregada Exitosamente',
+                'state':200
+            }
+    respuesta = jsonify(Dato)
+    return (respuesta)
+
+
+@app.route('/gen-factura', methods=['GET'])
+def gen_facturas():
+    global Clientes
+    global Consumos
+    global Configuraciones_glob
+    global Recursos
+    global Instancias_glob
+    
+    costo_total_consumo =0
+    consumos_cliente = []
+    costo_consumoLista =[]
+    consumo_individual =[]
+    existe = False
+    
+    cliente_id = request.json['data']
+    nit = cliente_id['nit_cliente']
+    
+    #get consumos del cliente
+    for consumo in Consumos:
+        if consumo.nit_cliente == nit:
+            existe = True
+            instancia_consumo = consumo.id_Instancia
+            tiempo = consumo.tiempo_consumido
+            fecha_hora = consumo.fecha_hora
+            
+            datos ={
+                'instancia': instancia_consumo,
+                'tiempo': tiempo,
+                'fecha_hora': fecha_hora
+            }
+            consumos_cliente.append(datos)
+        
+    if existe == False:
+        dato={
+            'message': 'no hay factura para este cliente',
+            'state':400
+        }
+        respuesta = jsonify(dato)
+        return (respuesta)    
+            
+    
+    #print(consumos_cliente)
+    
+    #get nombre del cliente
+    for clt in Clientes:
+        if clt.NIT == nit:
+            nombre = clt.nombre_cliente
+        #break
+    
+    for consumos in consumos_cliente:
+        tiempo = consumos['tiempo']
+        fecha_hora  = consumos['fecha_hora']
+        costo_totalxConsumo = 0
+        
+        for instance in Instancias_glob:
+            
+            if consumos['instancia'] == instance.id_instance:
+                configuracion_id = instance.id_configuracion
+            #break
+        
+        for config in Configuraciones_glob:
+            if configuracion_id == config.id_config:
+                recursos_lista = config.lista_recursos
+                
+                costo_totalConfig = 0
+
+                for rec in recursos_lista:
+                    id_recurso = rec['id_recurso']
+                    cantidad = rec['cantidad']
+                    
+                    #print('recurso')
+                    #print(id_recurso)
+                    
+                    for recursoG in Recursos:
+                        if recursoG.id_recurso == id_recurso:
+                            costoxHora =  recursoG.costo
+                            #print('costo por hora recurso')
+                            #print(costoxHora)
+                        #break
+                    
+                    valor_recursoxHora =   float(costoxHora) * int(cantidad)
+                    #print('valor por recurso')
+                    #print(valor_recursoxHora)
+                    costo_totalConfig = costo_totalConfig + valor_recursoxHora
+                    #print('costo total de la config')
+                    #print(costo_totalConfig)
+            #break
+        
+        costo_totalxConsumo =  costo_totalConfig * float(tiempo)
+        datos ={
+            'costo_consumo':round(costo_totalxConsumo,4),
+            'fecha_hora':fecha_hora
+        }
+        consumo_ind ={
+            'tiempo': tiempo,
+            'costo':round(costo_totalxConsumo,4)
+        }
+        costo_consumoLista.append(datos)
+        consumo_individual.append(consumo_ind)
+        
+        
+    print(costo_consumoLista)
+    
+    for datos in costo_consumoLista:
+        costo = datos['costo_consumo']
+        
+        costo_total_consumo = costo_total_consumo + costo
+        fecha_final_consumo = str(datos['fecha_hora'])
+       #fecha_final_consumo = fecha.split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ','')
+        
+        
+    Dato = {
+        'nombre': nombre,
+        'nit':nit,
+        'monto_total':round(costo_total_consumo,4),
+        'fecha_consumo':fecha_final_consumo,
+        'consumo':consumo_individual,
+        'state':200
+    }
+    respuesta = jsonify(Dato)
+    return (respuesta)
 
 
 

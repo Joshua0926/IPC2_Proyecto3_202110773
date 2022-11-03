@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %}
+{% block title %}FACTURA{% endblock %} 
+{% block content %}
+<div class="jumbotron" style="background-color:#41393900 ;">
+  <h1>Factura Generada</h1>
+</div>
+{% if factura.state == 200 %}
+<div id="category" class="rounded" style="background-color:#41393900 ;">
+  <h2>Factura</h2>
+  <div id="category_firstFields" class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <strong> NIT </strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>Cliente</strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>Monto total por consumo</strong>
+      </div>
+      <div class="col-sm-3">
+        <strong>Fecha</strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">{{ factura.nit }}</div>
+      <div class="col-sm-3">{{ factura.nombre }}</div>
+      <div class="col-sm-3">Q. {{ factura.monto_total }}</div>
+      <div class="col-sm-3">{{ factura.fecha_consumo }}</div>
+    </div>
+  </div>
+  <hr style="height: 10px" />
+  <div id="config_div" class="rounded">
+    <h3>Desglose de costos</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">tiempo de consumo</th>
+          <th scope="col">Costo total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cons in factura.consumo %}
+        <tr>
+          <td scope="row">{{cons.tiempo}} hrs</td>
+          <td>Q.{{cons.costo}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% elif factura.state == 400 %}
+<h2> no existe factura para este cliente </h2>
+{% endif %}
+
+{% endblock %}

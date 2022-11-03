@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view-catg.css' %}"/>
+{% endblock %}
+{% block title %}crear Instancia{% endblock %}
+{% block content %}
+<div class="jumbotron" style="background-color:#41393900 ;">
+    <h1> Crear Instancia</h1>
+</div>
+<div id="category" class="rounded" style="padding:50px;">
+  <form class=" row g-2" method="post">
+    {% csrf_token %}
+      <div class="col-md-6">
+        <label for="nombre_instance" class="form-label">Nombre: </label>
+        <input type="text" class="form-control" name="nombre_instance" id="nombre_instance"  value="{{ nombre_instance }}">
+      </div>
+      <div class="col-md-2">
+        <label for="id" class="form-label">ID Instancia</label>
+        <input type="text" class="form-control" name="id" id="id" value="{{ id }}">
+      </div>
+
+      <div class="col-md-4">
+        <label for="fecha_inicial" class="form-label">Fecha</label>
+        <input type="date" class="form-control" name="fecha_inicial" id="fecha_inicial" value="{{ fecha_inicial }}">
+      </div>
+
+      <div class="col-md-4">
+        <label for="configuracion" class="form-label">Configuracion</label>
+        {% if configuraciones%}
+        <select name="configuracion" class="form-control" id="configuracion">
+        {% for conf in configuraciones%}
+        <option value={{conf.id}}>{{conf.nombre}}</option>
+        {% endfor %}
+         </select>
+        {% endif %}
+      </div>
+     
+    <div class="col-md-12" style="margin-top:15px">
+      <button type="submit" class="btn btn-primary">Crear Instancia</button>
+    </div>
+  </form>
+
+</div>
+{% if message != '' %}
+<script>
+  alert('{{ message }}');
+</script>
+{% endif %}
+
+
+{% endblock %}

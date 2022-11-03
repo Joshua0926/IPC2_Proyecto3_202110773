@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% load static %} {% block extra_head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/view-catg.css' %}"
+/>
+{% endblock %} {% block title %}Instancias{% endblock %} {% block content %}
+<div class="jumbotron" style="background-color:#41393900 ;">
+  <h1>Instancias</h1>
+</div>
+{% for ins in instances %}
+<div id="category" class="rounded">
+  <div id="category_firstFields" class="container">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Configuracion</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha Inicio</th>
+            <th scope="col">Fecha Final</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">{{ins.id}}</td>
+            <td>{{ins.id_config}}</td>
+            <td>{{ins.nombre}}</td>
+            <td>{{ins.fecha_inicio}}</td>
+            <td>{{ins.fecha_final}}</td>
+            <td>{{ins.estado_instancia}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+{% endfor %} {% endblock %}
